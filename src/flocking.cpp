@@ -54,11 +54,36 @@ Real Flocking::SFlockingInteractionParams::GeneralizedLennardJones(Real f_distan
 /****************************************/
 /****************************************/
 
-Flocking::CFootBotFlocking() :
-   m_pcWheels(NULL),
-   m_pcLight(NULL),
-   m_pcLEDs(NULL),
-   m_pcCamera(NULL) {}
+Flocking::Flocking(std::shared_ptr<rclcpp::Node> node){
+    
+    this -> node_ = node;
+
+    // Create the topic to publish
+	stringstream cmdVelTopic, cmdRabTopic, cmdLedTopic;
+	cmdVelTopic << ns_ << "/cmd_vel";
+	cmdLedTopic << ns_ << "/cmd_led";
+
+	cmdVelPublisher_ = node_ -> create_publisher<Twist>(cmdVelTopic.str(), 1);
+	cmdLedPublisher_ = node_ -> create_publisher<Led>(cmdLedTopic.str(), 1);
+
+	// Create the subscribers
+	stringstream lightListTopic, blobTopic;
+	lightListTopic << ns_ << "/light";
+	proxTopic << ns_ << "/proximity";
+	blobTopic << ns_ << "/blob";
+
+	lightListSubscriber_ = node_ -> create_subscription<collective_decision_making::msg::LightList>(
+				lightListTopic.str(),
+				1,
+				std::bind(&Control::lightCallback, this, _1)
+				);
+	blobSubscriber_	= node_ -> create_subscription<BlobList>(
+			blobTopic.str(),
+			1,
+			std::bind(&Control::blobCallback, this, _1)
+			);
+
+}
 
 /****************************************/
 /****************************************/
@@ -279,7 +304,7 @@ void Flocking::SetWheelSpeedsFromVector(const CVector2& c_heading) {
 int main(int argc, char **argv) {
 	rclcpp::init(argc, argv);
 	std::shared_ptr<rclcpp::Node> node = std::make_shared<rclcpp::Node>("argos_ros_node");
-	Control controller(node);
+	Flocking controller(node);
 	rclcpp::spin(node);
 	rclcpp::shutdown();
 	return 0;
