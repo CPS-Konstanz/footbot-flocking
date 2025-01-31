@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+<argos-configuration>
+
+  <!-- ************************* -->
+  <!-- * General configuration * -->
+  <!-- ************************* -->
+  <framework>
+    <system threads="0" />
+    <experiment length="0"
+                ticks_per_second="10"
+                random_seed="124" />
+  </framework>
+
+  <!-- *************** -->
+  <!-- * Controllers * -->
+  <!-- *************** -->
+  <controllers>
+    <argos_ros_bot_controller id="argos_ros_bot" library="libargos_ros_bridge.so">
+      <actuators>
+        <differential_steering implementation="default" />
+        <range_and_bearing implementation="default" />
+        <leds implementation="default" medium="leds" />
+      </actuators>
+      <sensors>
+        <footbot_proximity implementation="default" show_rays="false"/>
+        <footbot_light implementation="rot_z_only" show_rays="true"/>
+        <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="true" />
+        <positioning implementation="default" />
+        <range_and_bearing implementation="medium" medium="rab" show_rays="true"/>  
+      </sensors>
+      <params>
+        <wheel_turning hard_turning_angle_threshold="90"
+                       soft_turn_angle_threshold="70"
+                       no_turn_angle_threshold="10"
+                       max_speed="50" />
+        <flocking target_distance="75"
+                  gain="1000"
+                  exponent="2" />
+      </params>
+    </argos_ros_bot_controller>
+  </controllers>
+
+  <!-- ****************** -->
+  <!-- * Loop functions * -->
+  <!-- ****************** -->
+
+  <!-- *********************** -->
+  <!-- * Arena configuration * -->
+  <!-- *********************** -->
+  <arena size="30,30,1" center="0,0,0.5">
+
+    <light id="light"
+           position="8.9,2.7,0.5"
+           orientation="0,0,0"
+           color="yellow"
+           intensity="3.0"
+           medium="leds" />
+
+    <distribute>
+      <position method="uniform" min="4,4,0" max="5,5,0" />
+      <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
+      <entity quantity="10" max_trials="100">
+        <foot-bot id="bot" rab_range="200" omnidirectional_camera_aperture="90" rab_data_size="120">
+          <controller config="argos_ros_bot" />
+        </foot-bot>
+      </entity>
+    </distribute>
+  </arena>
+
+  <!-- ******************* -->
+  <!-- * Physics engines * -->
+  <!-- ******************* -->
+  <physics_engines>
+    <dynamics2d id="dyn2d" boundaries="true" />
+  </physics_engines>
+
+  <!-- ********* -->
+  <!-- * Media * -->
+  <!-- ********* -->
+  <media>
+    <led id="leds" />
+    <range_and_bearing id="rab" />  
+  </media>
+
+  <!-- ****************** -->
+  <!-- * Visualization * -->
+  <!-- ****************** -->
+  <visualization>
+    <qt-opengl>
+      <camera>
+        <placements>
+          <placement index="0" position="3.47447,8.20587,3.42167" look_at="3.94263,7.5512,2.82817" up="0.345221,-0.48276,0.804839" lens_focal_length="20" />
+        </placements>
+      </camera>
+    </qt-opengl>
+  </visualization>
+
+</argos-configuration>
