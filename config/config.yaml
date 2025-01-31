@@ -1,0 +1,9 @@
+flocking_params:
+  MaxSpeed: 1.0
+  FlockingTargetDistance: 5.0
+  TargetDistance: 75.0
+  Exponent: 2.0
+  Gain: 1000.0
+  HARD_TURN: 5.0
+  SOFT_TURN: 0.01
+  NO_TURN: 0.0

@@ -19,6 +19,6 @@ ros2 launch flocking flocking.launch.py
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r cmd_vel:=bot0/cmd_vel
 ```
 
-## NODE_GRAPH
+## Demo of SDRM
 
 ![NODE_GRAPH](picture/node_grapg.png)

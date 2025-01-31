@@ -23,10 +23,10 @@
       </actuators>
       <sensors>
         <footbot_proximity implementation="default" show_rays="false"/>
-        <footbot_light implementation="rot_z_only" show_rays="true"/>
-        <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="true" />
+        <footbot_light implementation="rot_z_only" show_rays="false"/>
+        <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
         <positioning implementation="default" />
-        <range_and_bearing implementation="medium" medium="rab" show_rays="true"/>  
+        <range_and_bearing implementation="medium" medium="rab" show_rays="false"/>  
       </sensors>
       <params>
         <wheel_turning hard_turning_angle_threshold="90"
@@ -60,7 +60,7 @@
       <position method="uniform" min="4,4,0" max="5,5,0" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
       <entity quantity="10" max_trials="100">
-        <foot-bot id="bot" rab_range="200" omnidirectional_camera_aperture="90" rab_data_size="120">
+        <foot-bot id="bot" rab_range="200" omnidirectional_camera_aperture="89.99" rab_data_size="120">
           <controller config="argos_ros_bot" />
         </foot-bot>
       </entity>
