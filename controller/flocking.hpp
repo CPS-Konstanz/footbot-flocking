@@ -1,9 +1,6 @@
 #include <vector>
-
 #include "rclcpp/rclcpp.hpp"
-
 #include "geometry_msgs/msg/twist.hpp"
-
 #include "argos3_ros2_bridge/msg/light_list.hpp"
 #include "argos3_ros2_bridge/msg/blob_list.hpp"
 
@@ -33,10 +30,10 @@ public:
 
         // subscriber
         lightSubscription_ = this->create_subscription<argos3_ros2_bridge::msg::LightList>(
-            "light", 10, std::bind(&Flocking::light_callback, this, std::placeholders::_1));
+            "lightList", 10, std::bind(&Flocking::light_callback, this, std::placeholders::_1));
 
         blobSubscription_ = this->create_subscription<argos3_ros2_bridge::msg::BlobList>(
-            "blob", 10, std::bind(&Flocking::blob_callback, this, std::placeholders::_1));
+            "blobList", 10, std::bind(&Flocking::blob_callback, this, std::placeholders::_1));
 
         cmd_vel_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
 

@@ -1,5 +1,6 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
 import os
 
 def generate_launch_description():
@@ -7,9 +8,11 @@ def generate_launch_description():
     num_robots = 10
 
     config_file_path = os.path.join(
-        os.getcwd(), 'config', 'config.yaml'
+        get_package_share_directory('flocking'),
+        'config',
+        'config.yaml'
     )
-
+    print(f"Config file being used: {config_file_path}")
     nodes = [
         Node(
             package='flocking',

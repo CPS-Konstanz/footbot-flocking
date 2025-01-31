@@ -20,6 +20,10 @@ ament_target_dependencies(flocking
   argos3_ros2_bridge
 )
 
+install(DIRECTORY config/
+  DESTINATION share/${PROJECT_NAME}/config
+)
+
 install(DIRECTORY launch/
   DESTINATION share/${PROJECT_NAME}/launch
 )
