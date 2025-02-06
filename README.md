@@ -25,6 +25,7 @@ argos3 -c flocking.argos
 
 ## Launch controller node
 ```bash
+cd flocking_ws
 source install/setup.bash
 ros2 launch flocking flocking.launch.py
 ```
